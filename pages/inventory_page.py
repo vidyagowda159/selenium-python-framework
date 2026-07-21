@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.webdriver
-
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 class InventoryPage:
 
@@ -12,17 +12,17 @@ class InventoryPage:
     inventory_item = By.CLASS_NAME, "inventory_item"
     logout_button = By.ID, "logout_sidebar_link"
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver) -> None:
         self.driver = driver
 
     # User is redirected to the Inventory page.
     # URL contains /inventory.html.
-    def is_url_valid(self) -> bool:
-        return "/inventory.html" in self.driver.current_url
+    def get_current_url(self) -> str:
+        return self.driver.current_url
     
     # Page title displays Products.
-    def is_product_title_displayed(self) -> bool:
-        return self.driver.find_element(*self.products_title).is_displayed()
+    def get_product_title(self) -> str:
+        return self.driver.find_element(*self.products_title).text
     
     # Burger (menu) button is visible.
     def is_menu_bar_visible(self) -> bool:
@@ -41,15 +41,14 @@ class InventoryPage:
         return self.driver.find_element(*self.inventory_list).is_displayed()
     
     # At least one inventory item is present.
-    def get_inventory_items(self):
+    def get_inventory_items(self) -> list[WebElement]:
         return self.driver.find_elements(*self.inventory_item)
     
-    def open_menu(self) -> None:
+    def open_menu(self) -> WebElement:
         self.driver.find_element(*self.burger_icon).click()
 
     # Logout option is available after opening the menu.
-    def is_logout_option_visible(self)->bool:
-        self.open_menu()
+    def is_logout_option_visible(self) -> bool:
         return self.driver.find_element(*self.logout_button).is_displayed()
     
 

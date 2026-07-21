@@ -1,11 +1,12 @@
 import time
 from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 from pytest import fixture
 from config.config import Config
 
 
 @fixture()
-def driver_init():
+def driver_init() -> WebDriver:
     if Config.BROWSER.lower() == "chrome":
         c_options = webdriver.ChromeOptions()
         c_options.add_experimental_option("detach", True)
