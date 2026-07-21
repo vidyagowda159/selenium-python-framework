@@ -21,9 +21,10 @@ def driver_init():
     driver.maximize_window()
 
     yield driver
+
     title = driver.title
     print(title)
-    # driver.quit()
+    driver.quit()
 
 
 

@@ -1,10 +1,11 @@
 from selenium.webdriver.common.by import By
+from .inventory_page import InventoryPage
 
 
 class LoginPage:
-    username_textbox = (By.XPATH, '//input[@id="user-name"]')
-    password_textbox = (By.XPATH, '//input[@id="password"]')
-    login_button = (By.XPATH, '//input[@id="login-button"]')
+    username_textbox = (By.ID, 'user-name')
+    password_textbox = (By.ID, 'password')
+    login_button = (By.ID, 'login-button')
 
     def __init__(self, driver):
         self.driver = driver
@@ -18,8 +19,8 @@ class LoginPage:
     def click_login(self):
         self.driver.find_element(*self.login_button).click()
 
-
     def login(self, username, password):
         self.enter_username(username)
         self.enter_password(password)
         self.click_login()
+        return InventoryPage(self.driver)
